@@ -64,6 +64,14 @@ _site/
 .jekyll-cache/
 .jekyll-metadata
 
+# API Collections
+*.postman.json
+*.insomnia.json
+*.swagger.json
+*.openapi.json
+*.openapi.yaml
+*.swagger.yaml
+
 # Operating System
 .DS_Store
 Thumbs.db

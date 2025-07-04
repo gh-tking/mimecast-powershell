@@ -32,7 +32,14 @@
         'Get-MimecastThreatRemediation',
         'Start-MimecastThreatRemediation',
         'Get-MimecastThreatRemediationStatus',
-        'Stop-MimecastThreatRemediation'
+        'Stop-MimecastThreatRemediation',
+        # Held Messages (Quarantine)
+        'Get-MimecastHeldMessage',
+        'Release-MimecastHeldMessage',
+        'Block-MimecastHeldMessage',
+        'Get-MimecastHeldMessageContent',
+        'Save-MimecastHeldMessageAttachment',
+        'Get-MimecastHeldMessageHeader'
     )
     PrivateData = $true # Load PrivateData from .psm1
 }
