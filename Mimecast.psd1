@@ -27,7 +27,12 @@
         'Search-MimecastMessage',
         'Get-MimecastMessageInfo',
         'Get-MimecastHeldMessage',
-        'Get-MimecastProcessingMessage'
+        'Get-MimecastProcessingMessage',
+        # Threat Remediation
+        'Get-MimecastThreatRemediation',
+        'Start-MimecastThreatRemediation',
+        'Get-MimecastThreatRemediationStatus',
+        'Stop-MimecastThreatRemediation'
     )
     PrivateData = $true # Load PrivateData from .psm1
 }
