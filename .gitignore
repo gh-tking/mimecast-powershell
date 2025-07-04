@@ -1,0 +1,69 @@
+# PowerShell module files
+*.dll
+*.pdb
+*.mof
+*.xml
+*.log
+
+# Build output
+bin/
+obj/
+out/
+
+# Package management
+packages/
+*.nupkg
+
+# IDE files
+.vs/
+.vscode/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Test results
+TestResults/
+coverage/
+*.coverage
+*.coveragexml
+*.trx
+
+# Temporary files
+*.tmp
+*.temp
+*~
+*.bak
+*.swp
+
+# Module specific
+*.log
+*.debug
+*.trace
+*.old
+
+# Secret files
+*.key
+*.pfx
+*.cer
+*.crt
+*.pem
+*.p12
+*.pkcs12
+*.password
+*.secret
+*.token
+
+# Environment files
+.env
+.env.*
+
+# Documentation build
+_site/
+.sass-cache/
+.jekyll-cache/
+.jekyll-metadata
+
+# Operating System
+.DS_Store
+Thumbs.db
