@@ -46,7 +46,8 @@ Get-MimecastHeldMessage -Route 'inbound'
 
 - [User Guide](Docs/UserGuide.md) - Detailed usage instructions and examples
 - [API Reference](https://www.mimecast.com/developer/) - Mimecast API documentation
-- [Contributing](CONTRIBUTING.md) - Guidelines for contributing to the project
+- [Threat Remediation Guide](Docs/ThreatRemediation.md) - Managing email threats
+- [Held Messages Guide](Docs/HeldMessages.md) - Managing quarantined messages
 
 ## Requirements
 
@@ -140,10 +141,6 @@ Search-MimecastMessage -Subject 'invoice' |
     }
 ```
 
-## Contributing
-
-Contributions are welcome! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
-
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
@@ -152,4 +149,3 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 - For bugs and feature requests, please create an issue
 - For questions and discussions, please use GitHub Discussions
-- For security issues, please see our [Security Policy](SECURITY.md)
