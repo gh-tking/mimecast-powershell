@@ -21,36 +21,67 @@ Import-Module Mimecast
 
 ## Getting Started
 
-Before using the module, you'll need to connect to the Mimecast API:
+Before using the module, you'll need to connect to the Mimecast API. The recommended secure approach is to use the `-Setup` parameter:
 
 ```powershell
-# Connect using API credentials
-Connect-Mimecast -AccessKey 'your-access-key' -SecretKey 'your-secret-key'
+# First-time setup and connection (recommended)
+Connect-Mimecast -Setup -Region 'US'  # or EU, DE, CA, ZA, AU, Offshore
+```
 
-# Or connect using stored credentials
-Connect-Mimecast -UseSecretStore -SecretVaultName 'MimecastVault'
+This will:
+1. Initialize the secure credential store
+2. Securely prompt for your API credentials
+3. Store the credentials in an encrypted vault
+4. Establish the API connection
+
+For subsequent connections, simply use:
+```powershell
+Connect-Mimecast -Region 'US'
 ```
 
 ## Authentication
 
-The module supports multiple authentication methods:
+The module uses Microsoft.PowerShell.SecretManagement and Microsoft.PowerShell.SecretStore to securely manage your API credentials:
 
-1. Direct API Keys:
-   ```powershell
-   Connect-Mimecast -AccessKey 'key' -SecretKey 'secret' -ApplicationId 'app-id'
-   ```
+- Credentials are never exposed in scripts or command history
+- All secrets are encrypted at rest
+- Access is controlled through the SecretStore vault
 
-2. Secure Credential Storage:
-   ```powershell
-   # First-time setup
-   Initialize-MimecastModule -ConfigureSecretStore
-   
-   # Store credentials
-   Set-MimecastSecret -AccessKey 'key' -SecretKey 'secret'
-   
-   # Connect using stored credentials
-   Connect-Mimecast -UseSecretStore
-   ```
+### Security Best Practices
+
+1. NEVER:
+   - Include API keys or secrets in scripts
+   - Pass credentials as command line parameters
+   - Store credentials in source control
+   - Log credentials or secrets
+   - Include credentials in documentation
+
+2. ALWAYS:
+   - Use `-Setup` for initial configuration
+   - Let the module prompt for credentials
+   - Store credentials in the SecretStore vault
+   - Use environment-specific credential names for different environments
+
+### Managing Multiple Environments
+
+For scenarios like CI/CD or multiple accounts:
+
+```powershell
+# Connect with environment-specific credentials
+Connect-Mimecast `
+    -ClientIdName 'Prod_ClientId' `
+    -ClientSecretName 'Prod_ClientSecret' `
+    -Region 'US'
+```
+
+### Rotating Credentials
+
+To update stored credentials:
+
+```powershell
+# Securely update credentials
+Connect-Mimecast -Setup -Region 'US' -ForceSetup
+```
 
 ## Archive Message Search
 
