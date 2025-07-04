@@ -1,4 +1,4 @@
-Describe 'MimecastApi Module Tests' {
+Describe 'Mimecast Module Tests' {
     BeforeAll {
         $ModulePath = Split-Path -Parent $PSScriptRoot
         Import-Module $ModulePath -Force
@@ -6,19 +6,19 @@ Describe 'MimecastApi Module Tests' {
 
     Context 'Module Loading' {
         It 'Imports successfully' {
-            Get-Module MimecastApi | Should -Not -BeNull
+            Get-Module Mimecast | Should -Not -BeNull
         }
 
         It 'Has required functions exported' {
             $RequiredFunctions = @(
-                'Connect-MimecastApi',
-                'Disconnect-MimecastApi',
-                'Set-MimecastApiConfiguration',
-                'Get-MimecastApiConfiguration',
-                'Get-MimecastApiSystemInfo'
+                'Connect-Mimecast',
+                'Disconnect-Mimecast',
+                'Set-MimecastConfiguration',
+                'Get-MimecastConfiguration',
+                'Get-MimecastSystemInfo'
             )
             
-            $ExportedFunctions = Get-Command -Module MimecastApi
+            $ExportedFunctions = Get-Command -Module Mimecast
             foreach ($Function in $RequiredFunctions) {
                 $ExportedFunctions.Name | Should -Contain $Function
             }
@@ -27,8 +27,8 @@ Describe 'MimecastApi Module Tests' {
 
     Context 'Configuration' {
         It 'Sets and gets configuration' {
-            Set-MimecastApiConfiguration -LogFilePath 'TestLog.log' -ApiVaultName 'TestVault'
-            $config = Get-MimecastApiConfiguration
+            Set-MimecastConfiguration -LogFilePath 'TestLog.log' -ApiVaultName 'TestVault'
+            $config = Get-MimecastConfiguration
             $config.LogFilePath | Should -Be 'TestLog.log'
             $config.ApiVaultName | Should -Be 'TestVault'
         }
@@ -51,20 +51,20 @@ Describe 'MimecastApi Module Tests' {
         }
 
         It 'Initializes module and creates vault if needed' {
-            Initialize-MimecastApiModule
+            Initialize-MimecastModule
             Should -Invoke Register-SecretVault -Times 1
             Should -Invoke Set-ApiSecret -Times 2
         }
 
         It 'Skips initialization if secrets exist' {
             Mock Get-ApiSecret { ConvertTo-SecureString "existing-secret" -AsPlainText -Force }
-            Initialize-MimecastApiModule
+            Initialize-MimecastModule
             Should -Invoke Set-ApiSecret -Times 0
         }
 
         It 'Forces reinitialization with -ForceSetup' {
             Mock Get-ApiSecret { ConvertTo-SecureString "existing-secret" -AsPlainText -Force }
-            Initialize-MimecastApiModule -ForceSetup
+            Initialize-MimecastModule -ForceSetup
             Should -Invoke Set-ApiSecret -Times 2
         }
     }
@@ -99,9 +99,9 @@ Describe 'MimecastApi Module Tests' {
         }
 
         It 'Connects successfully with valid OAuth2 credentials' {
-            { Connect-MimecastApi -Region 'US' } | Should -Not -Throw
+            { Connect-Mimecast -Region 'US' } | Should -Not -Throw
             
-            $config = Get-MimecastApiConfiguration
+            $config = Get-MimecastConfiguration
             $config.Connection.Connected | Should -Be $true
             $config.Connection.Region | Should -Be 'US'
             $config.Connection.TokenExpiresAt | Should -Not -BeNullOrEmpty
@@ -109,23 +109,23 @@ Describe 'MimecastApi Module Tests' {
 
         It 'Connects successfully with Setup parameter' {
             Mock Get-ApiSecret { $null } # Simulate no existing credentials
-            { Connect-MimecastApi -Setup -Region 'US' } | Should -Not -Throw
+            { Connect-Mimecast -Setup -Region 'US' } | Should -Not -Throw
             Should -Invoke Set-ApiSecret -Times 2
             
-            $config = Get-MimecastApiConfiguration
+            $config = Get-MimecastConfiguration
             $config.Connection.Connected | Should -Be $true
             $config.Connection.Region | Should -Be 'US'
         }
 
         It 'Uses provided credential names over defaults' {
-            { Connect-MimecastApi -ClientIdName 'CustomId' -ClientSecretName 'CustomSecret' -Region 'US' } |
+            { Connect-Mimecast -ClientIdName 'CustomId' -ClientSecretName 'CustomSecret' -Region 'US' } |
                 Should -Not -Throw
             Should -Invoke Get-ApiSecret -ParameterFilter { $Name -eq 'CustomId' } -Times 1
             Should -Invoke Get-ApiSecret -ParameterFilter { $Name -eq 'CustomSecret' } -Times 1
         }
 
         It 'Gets system info with Bearer token' {
-            $info = Get-MimecastApiSystemInfo
+            $info = Get-MimecastSystemInfo
             $info.success | Should -Be $true
             $info.data.up | Should -Be $true
             
@@ -136,8 +136,8 @@ Describe 'MimecastApi Module Tests' {
         }
 
         It 'Disconnects and clears OAuth2 tokens' {
-            Disconnect-MimecastApi
-            $config = Get-MimecastApiConfiguration
+            Disconnect-Mimecast
+            $config = Get-MimecastConfiguration
             $config.Connection | Should -Be $null
             $config.AccessToken | Should -BeNullOrEmpty
             $config.TokenExpiresAt | Should -Be $null

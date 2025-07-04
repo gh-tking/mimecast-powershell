@@ -79,8 +79,8 @@ C:\> Register-MimecastLogCollectorTask `
     -Type "receipt" `
     -PageSize 100 `
     -StartDate (Get-Date).AddDays(-7) `
-    -LogOutputDirectory "C:\ProgramData\MimecastApi\Logs" `
-    -StateDirectory "C:\ProgramData\MimecastApi\State" `
+    -LogOutputDirectory "C:\ProgramData\Mimecast\Logs" `
+    -StateDirectory "C:\ProgramData\Mimecast\State" `
     -Frequency "EveryNMinutes" `
     -IntervalMinutes 5 `
     -Credential $svcCredential
@@ -91,8 +91,8 @@ Creates a task to collect Customer Gateway events every 5 minutes.
 C:\> Register-MimecastLogCollectorTask `
     -TaskName "MimecastSIEMLogCollector_CI" `
     -Type "entities" `
-    -LogOutputDirectory "C:\ProgramData\MimecastApi\Logs" `
-    -StateDirectory "C:\ProgramData\MimecastApi\State" `
+    -LogOutputDirectory "C:\ProgramData\Mimecast\Logs" `
+    -StateDirectory "C:\ProgramData\Mimecast\State" `
     -Frequency "Daily" `
     -TimeOfDay "03:00" `
     -Credential $svcCredential
@@ -103,8 +103,8 @@ Creates a task to collect Customer Intelligence events daily at 3 AM.
 C:\> Register-MimecastLogCollectorTask `
     -TaskName "MimecastSIEMLogCollector_Weekly" `
     -Type "receipt" `
-    -LogOutputDirectory "C:\ProgramData\MimecastApi\Logs" `
-    -StateDirectory "C:\ProgramData\MimecastApi\State" `
+    -LogOutputDirectory "C:\ProgramData\Mimecast\Logs" `
+    -StateDirectory "C:\ProgramData\Mimecast\State" `
     -Frequency "Weekly" `
     -DayOfWeek "Sunday" `
     -TimeOfDay "00:00" `
@@ -292,8 +292,8 @@ Removes the specified task, leaving state and log files intact.
 C:\> Unregister-MimecastLogCollectorTask `
     -TaskName "MimecastSIEMLogCollector_CG" `
     -CleanupFiles `
-    -StateDirectory "C:\ProgramData\MimecastApi\State" `
-    -LogOutputDirectory "C:\ProgramData\MimecastApi\Logs"
+    -StateDirectory "C:\ProgramData\Mimecast\State" `
+    -LogOutputDirectory "C:\ProgramData\Mimecast\Logs"
 
 Removes the task and all associated files.
 

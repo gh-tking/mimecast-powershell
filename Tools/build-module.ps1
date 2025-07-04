@@ -39,4 +39,4 @@ if ($RunTests) {
 # Copy module files to build directory
 Copy-Item -Path "$ModulePath\*" -Destination $OutputPath -Recurse -Force
 
-Write-Host "MimecastApi module built successfully at $OutputPath"
+Write-Host "Mimecast module built successfully at $OutputPath"

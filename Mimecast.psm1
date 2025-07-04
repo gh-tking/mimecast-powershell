@@ -1,8 +1,8 @@
 # Module-level PrivateData
 $PrivateData = @{
     BaseUri = "https://api.mimecast.com/api/v2/" # Base URI for Mimecast API 2.0
-    LogFilePath = "$($PSScriptRoot)\MimecastApi.log"
-    ApiVaultName = "MimecastApiVault"
+    LogFilePath = "$($PSScriptRoot)\Mimecast.log"
+    ApiVaultName = "MimecastVault"
     # Mimecast-specific configurations
     ApiVersion = "v2"
     RegionUri = "" # Will be set during connection based on account region

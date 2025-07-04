@@ -1,19 +1,19 @@
 # Import the module
-Import-Module MimecastApi
+Import-Module Mimecast
 
 # Configure the module
-Set-MimecastApiConfiguration -LogFilePath 'C:\Logs\MimecastApi.log' -ApiVaultName 'MimecastApiVault'
+Set-MimecastConfiguration -LogFilePath 'C:\Logs\Mimecast.log' -ApiVaultName 'MimecastVault'
 
 # Method 1: Initialize first, then connect
 # This will prompt for credentials if they haven't been stored yet
-Initialize-MimecastApiModule
+Initialize-MimecastModule
 
 # Connect using stored credentials
-Connect-MimecastApi -Region 'US'  # or EU, DE, CA, ZA, AU, Offshore
+Connect-Mimecast -Region 'US'  # or EU, DE, CA, ZA, AU, Offshore
 
 # Method 2: Use the Setup switch (shortcut)
 # This will initialize the module and connect in one step
-Connect-MimecastApi -Setup -Region 'US'
+Connect-Mimecast -Setup -Region 'US'
 
 # Method 3: Use different credential names
 # Useful for CI/CD or temporary overrides
@@ -23,16 +23,16 @@ $altClientSecret = Read-Host -Prompt "Enter alternative Client Secret" -AsSecure
 Set-ApiSecret -Name 'AlternativeClientId' -Secret $altClientId
 Set-ApiSecret -Name 'AlternativeClientSecret' -Secret $altClientSecret
 
-Connect-MimecastApi `
+Connect-Mimecast `
     -ClientIdName 'AlternativeClientId' `
     -ClientSecretName 'AlternativeClientSecret' `
     -Region 'US'
 
 # Get current configuration
-Get-MimecastApiConfiguration
+Get-MimecastConfiguration
 
 # Test the API connection
-Get-MimecastApiSystemInfo
+Get-MimecastSystemInfo
 
 #
 # User Management
@@ -316,13 +316,13 @@ Get-MimecastMessageFile -Id $message.id -OutputPath 'C:\Temp\message.eml'
 # IMPORTANT: Prerequisites
 # 1. Create custom API role with "SIEM Integration > SIEM Events > Read" permissions
 # 2. Create service account with "Log on as a batch job" rights
-# 3. Store API credentials using Set-MimecastApiSecret
+# 3. Store API credentials using Set-MimecastSecret
 # 4. Note: Mimecast retains SIEM events for 7 days
 
 # Define paths and settings
-$scriptPath = "C:\Program Files\MimecastApi\Scripts\Invoke-MimecastLogCollection.ps1"
-$stateDir = "C:\ProgramData\MimecastApi\State"
-$logDir = "C:\ProgramData\MimecastApi\Logs"
+$scriptPath = "C:\Program Files\Mimecast\Scripts\Invoke-MimecastLogCollection.ps1"
+$stateDir = "C:\ProgramData\Mimecast\State"
+$logDir = "C:\ProgramData\Mimecast\Logs"
 
 # Ensure directories exist
 New-Item -Path $stateDir, $logDir -ItemType Directory -Force
@@ -383,4 +383,4 @@ Stop-MimecastLogCollectorTask -TaskName "MimecastSIEMLogCollector_CI"
 # Unregister-MimecastLogCollectorTask -TaskName "MimecastSIEMLogCollector_CI"
 
 # Disconnect when done
-Disconnect-MimecastApi
+Disconnect-Mimecast

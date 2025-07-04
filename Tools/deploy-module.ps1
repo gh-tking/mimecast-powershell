@@ -4,7 +4,7 @@ param (
     [string]$ModulePath = (Split-Path -Parent (Split-Path -Parent $PSScriptRoot)),
     
     [Parameter()]
-    [string]$ModuleName = 'MimecastApi',
+    [string]$ModuleName = 'Mimecast',
     
     [Parameter()]
     [string]$DestinationPath = "$env:USERPROFILE\Documents\WindowsPowerShell\Modules\$ModuleName"
@@ -27,7 +27,7 @@ if (-not (Get-Module -Name Microsoft.PowerShell.SecretStore -ListAvailable)) {
 Copy-Item -Path "$ModulePath\*" -Destination $DestinationPath -Recurse -Force
 
 # Create scripts directory in Program Files
-$scriptsPath = "C:\Program Files\MimecastApi\Scripts"
+$scriptsPath = "C:\Program Files\Mimecast\Scripts"
 if (-not (Test-Path -Path $scriptsPath)) {
     New-Item -Path $scriptsPath -ItemType Directory -Force | Out-Null
 }
@@ -36,11 +36,11 @@ if (-not (Test-Path -Path $scriptsPath)) {
 Copy-Item -Path "$ModulePath\Tools\Invoke-MimecastLogCollection.ps1" -Destination $scriptsPath -Force
 
 # Create state and logs directories
-$stateDir = "C:\ProgramData\MimecastApi\State"
-$logDir = "C:\ProgramData\MimecastApi\Logs"
+$stateDir = "C:\ProgramData\Mimecast\State"
+$logDir = "C:\ProgramData\Mimecast\Logs"
 New-Item -Path $stateDir, $logDir -ItemType Directory -Force | Out-Null
 
-Write-Host "MimecastApi module deployed successfully to $DestinationPath"
+Write-Host "Mimecast module deployed successfully to $DestinationPath"
 Write-Host "Log collector script deployed to $scriptsPath"
 Write-Host "State directory created at $stateDir"
 Write-Host "Log directory created at $logDir"

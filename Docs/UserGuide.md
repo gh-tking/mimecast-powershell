@@ -13,10 +13,10 @@
 
 ```powershell
 # Install from PowerShell Gallery
-Install-Module -Name MimecastApi -Scope CurrentUser
+Install-Module -Name Mimecast -Scope CurrentUser
 
 # Import the module
-Import-Module MimecastApi
+Import-Module Mimecast
 ```
 
 ## Getting Started
@@ -25,10 +25,10 @@ Before using the module, you'll need to connect to the Mimecast API:
 
 ```powershell
 # Connect using API credentials
-Connect-MimecastApi -AccessKey 'your-access-key' -SecretKey 'your-secret-key'
+Connect-Mimecast -AccessKey 'your-access-key' -SecretKey 'your-secret-key'
 
 # Or connect using stored credentials
-Connect-MimecastApi -UseSecretStore -SecretVaultName 'MimecastVault'
+Connect-Mimecast -UseSecretStore -SecretVaultName 'MimecastVault'
 ```
 
 ## Authentication
@@ -37,19 +37,19 @@ The module supports multiple authentication methods:
 
 1. Direct API Keys:
    ```powershell
-   Connect-MimecastApi -AccessKey 'key' -SecretKey 'secret' -ApplicationId 'app-id'
+   Connect-Mimecast -AccessKey 'key' -SecretKey 'secret' -ApplicationId 'app-id'
    ```
 
 2. Secure Credential Storage:
    ```powershell
    # First-time setup
-   Initialize-MimecastApiModule -ConfigureSecretStore
+   Initialize-MimecastModule -ConfigureSecretStore
    
    # Store credentials
-   Set-MimecastApiSecret -AccessKey 'key' -SecretKey 'secret'
+   Set-MimecastSecret -AccessKey 'key' -SecretKey 'secret'
    
    # Connect using stored credentials
-   Connect-MimecastApi -UseSecretStore
+   Connect-Mimecast -UseSecretStore
    ```
 
 ## Archive Message Search

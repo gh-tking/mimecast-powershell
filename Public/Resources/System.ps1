@@ -1,4 +1,4 @@
-function Get-MimecastApiSystemInfo {
+function Get-MimecastSystemInfo {
     [CmdletBinding()]
     param()
     

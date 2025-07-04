@@ -1,4 +1,4 @@
-function Initialize-MimecastApiModule {
+function Initialize-MimecastModule {
     [CmdletBinding()]
     param (
         [Parameter()]
@@ -35,7 +35,7 @@ function Initialize-MimecastApiModule {
         Set-ApiSecret -Name 'MimecastClientSecret' -Secret $clientSecret -Vault $vaultName
 
         Write-Host "Mimecast API credentials have been securely stored."
-        Write-Host "You can now use Connect-MimecastApi -Region <region> to connect to the API."
+        Write-Host "You can now use Connect-Mimecast -Region <region> to connect to the API."
     }
     catch {
         Write-Error -ErrorRecord $_

@@ -24,7 +24,7 @@ function Invoke-ApiRequest {
     begin {
         $BaseUri = $ExecutionContext.SessionState.Module.PrivateData.BaseUri
         if (-not $BaseUri) {
-            throw "BaseUri not configured. Use Set-MimecastApiConfiguration to set the base URI."
+            throw "BaseUri not configured. Use Set-MimecastConfiguration to set the base URI."
         }
 
         # Check if we have a valid access token
@@ -32,7 +32,7 @@ function Invoke-ApiRequest {
         $tokenExpiresAt = $ExecutionContext.SessionState.Module.PrivateData.TokenExpiresAt
 
         if (-not $accessToken -or -not $tokenExpiresAt -or $tokenExpiresAt -le [DateTime]::UtcNow) {
-            throw "No valid access token found. Please connect using Connect-MimecastApi first."
+            throw "No valid access token found. Please connect using Connect-Mimecast first."
         }
 
         # Set OAuth2 Bearer token

@@ -37,14 +37,14 @@ Start-Transcript -Path $transcriptPath -Force
 try {
     Write-Verbose "Starting Mimecast log collection at $(Get-Date)"
     
-    # Import the MimecastApi module
-    $modulePath = Join-Path $PSScriptRoot "..\MimecastApi.psd1"
+    # Import the Mimecast module
+    $modulePath = Join-Path $PSScriptRoot "..\Mimecast.psd1"
     Import-Module $modulePath -ErrorAction Stop
-    Write-Verbose "Successfully imported MimecastApi module"
+    Write-Verbose "Successfully imported Mimecast module"
 
     # Connect to Mimecast API
     Write-Verbose "Connecting to Mimecast API..."
-    Connect-MimecastApi -ClientIdName $ClientIdName -ClientSecretName $ClientSecretName -ErrorAction Stop
+    Connect-Mimecast -ClientIdName $ClientIdName -ClientSecretName $ClientSecretName -ErrorAction Stop
     Write-Verbose "Successfully connected to Mimecast API"
 
     # Create log output directory if specified
@@ -151,7 +151,7 @@ catch {
 finally {
     # Always disconnect from the API
     try {
-        Disconnect-MimecastApi
+        Disconnect-Mimecast
         Write-Verbose "Disconnected from Mimecast API"
     }
     catch {
